@@ -1,14 +1,40 @@
+<?php
+
+// Start session
+session_start();
+
+// Check if country or music button clicked
+if(isset($_GET['countries'])) {
+  $_SESSION['name'] = $_GET['name'];  
+  header("Location: countries.php");
+  exit();
+}
+
+if(isset($_GET['music'])) {
+  $_SESSION['name'] = $_GET['name'];
+  header("Location: music.php"); 
+  exit();  
+}
+
+?>
+
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>ISIT307 Assignment 1</title>
-	</head>
-	<body>
-		<h1>Welcome to the quiz!</h1>
-		<form action="index_process.php" method="post">
-			<label for="name">Enter Your Name:</label>
-			<input type="text" id="name" name="name" required>
-			<button type="submit">Submit</button>
-		</form>
-	</body>
+<head>
+  <title>Funny Facts Quiz</title>  
+</head>
+
+<body>
+
+<h1>Welcome to Funny Facts Quiz</h1>
+
+<form>
+  <label for="name">Enter Your Name:</label>
+  <input type="text" id="name" name="name">
+  <p>Select a topic</p>
+  <button type="submit" name="countries" value="true">Countries</button>
+  <button type="submit" name="music" value="true">Music</button>
+</form>
+
+</body>
 </html>
