@@ -7,14 +7,18 @@ session_start();
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Countries Quiz - Score</title>  
+  <title>Score</title>  
 </head>
 
 <body>
 
 Hello <?=$_SESSION['name']?> 
 <br>
-Your score is <?=$_SESSION['score']?>
+Your score for this attempt is <?=$_SESSION['score']?>
+<br>
+Correct Answers = <?=$_SESSION['correctAnswersCount']?> 
+<br>
+Incorrect Answers = <?=$_SESSION['incorrectAnswersCount']?>
 
 <?php
 
