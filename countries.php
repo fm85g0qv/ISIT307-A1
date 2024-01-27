@@ -1,76 +1,90 @@
 <?php
-// Start a session to persist data across requests
 session_start();
 
-// Read questions from the file into an array
-$questions = file('countries_quiz.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-
-// Initialize the score in the session if not already set
-if (!isset($_SESSION['score'])) {
-  $_SESSION['score'] = 0;
-}
-
-// Check if the form has been submitted (POST request)
+// Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Retrieve user answers from the form
+    $userAnswers = isset($_POST['userAnswers']) ? $_POST['userAnswers'] : [];
 
-  // Retrieve user's answers from the form
-  $answers = $_POST['answer'];
+    // Initialize counters
+    $correctAnswersCount = 0;
+    $incorrectAnswersCount = 0;
 
-  // Iterate through each answer and update the score
-  foreach ($answers as $i => $answer) {
-    // Extract the correct answer from the corresponding question
-    $parts = explode(',', $questions[$i]);
-    $correct = $parts[1];
+    // Check user answers against correct answers and update the counts
+	foreach ($_SESSION['questions'] as $question) {
+		$correctAnswer = $question['boolean'];
+		$userAnswer = strtolower($userAnswers[$question['number']]);
+		
+		if ($userAnswer === $correctAnswer) {
+			$correctAnswersCount++;
+		} else {
+			$incorrectAnswersCount++;
+		}
+	}
 
-    // Update the score based on the correctness of the answer
-    if ($answer == $correct) {
-      $_SESSION['score']++;
-    } else {
-      $_SESSION['score']--;
-    }
-  }
 
-  // Redirect to the score page after processing the answers
-  header('Location: score.php');
-  exit;
+
+    // Update the session counts
+    $_SESSION['correctAnswersCount'] = $correctAnswersCount;
+    $_SESSION['incorrectAnswersCount'] = $incorrectAnswersCount;
+
+    // Update the session score
+    $score = ($correctAnswersCount * 4) - ($incorrectAnswersCount * 2);
+    $_SESSION['score'] = $score;
+
+    // Redirect to the score.php page
+    header('Location: score.php');
+    exit();
 }
 
-// Randomly pick 3 questions for the current quiz session
-$random_indices = array_rand($questions, 3);
-$random_questions = array_intersect_key($questions, array_flip($random_indices));
+// Read questions from the text file
+$questions = [];
+$lines = file('countries_quiz.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+foreach ($lines as $line) {
+    $data = explode('|', $line);
+    $questions[] = [
+        'number' => trim($data[0]),
+        'trivia' => trim($data[1]),
+        'boolean' => trim($data[2]),
+    ];
+}
+
+// Randomly select 3 questions
+$selectedQuestions = array_rand($questions, 3);
+$selectedQuestionsData = [];
+foreach ($selectedQuestions as $index) {
+    $selectedQuestionsData[] = $questions[$index];
+}
+
+// Save selected questions in the session
+$_SESSION['questions'] = $selectedQuestionsData;
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Countries Quiz</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countries Quiz</title>
 </head>
 <body>
+    <h1>Countries Quiz</h1>
 
-  <h1>Countries Quiz</h1>
+    <form method="post" action="">
+        <?php foreach ($selectedQuestionsData as $question): ?>
+            <div>
+                <?php echo $question['trivia'] . "<br>"; ?>
+                <label>
+                    <input type="radio" name="userAnswers[<?php echo $question['number']; ?>]" value="true"> True
+                </label>
+                <label>
+                    <input type="radio" name="userAnswers[<?php echo $question['number']; ?>]" value="false"> False
+                </label>
+            </div>
+			<br>
+        <?php endforeach; ?>
 
-  <form method="post">
-
-    <?php foreach ($random_questions as $i => $question): ?>
-      <?php
-        // Extract the question text from the question-answer pair
-        $parts = explode(',', $question);
-        $questionText = $parts[0];
-      ?>
-      <div>
-        <p><?php echo ($i + 1) . '. ' . $questionText; ?></p>
-        <!-- Radio buttons for True and False answers -->
-        <input type="radio" name="answer[<?php echo $i; ?>]" value="1"> True
-        <input type="radio" name="answer[<?php echo $i; ?>]" value="0"> False
-      </div>
-    <?php endforeach; ?>
-
-    <br>
-
-    <!-- Submit button to submit the quiz answers -->
-    <input type="submit" value="Submit Answers">
-
-  </form>
-
+        <button type="submit">Submit</button>
+    </form>
 </body>
 </html>

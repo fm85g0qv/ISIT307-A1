@@ -6,9 +6,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve user answers from the form
     $userAnswers = isset($_POST['userAnswers']) ? $_POST['userAnswers'] : [];
 
-    // Check user answers against correct answers and update the score
+    // Set score to 0;
     $score = 0;
-    foreach ($_SESSION['questions'] as $question) {
+/*     foreach ($_SESSION['questions'] as $question) {
         $correctAnswer = strtolower($question['name']);
         $userAnswer = strtolower($userAnswers[$question['number']]);
         if ($userAnswer === $correctAnswer) {
@@ -16,10 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $score--;
         }
-    }
-
-    // Update the session score
-    $_SESSION['score'] = $score;
+    } */
 	
 	// Initialize counters
     $correctAnswersCount = 0;
@@ -39,6 +36,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Update the session counts
     $_SESSION['correctAnswersCount'] = $correctAnswersCount;
     $_SESSION['incorrectAnswersCount'] = $incorrectAnswersCount;
+	
+	// Update the session score
+	$score = ($correctAnswersCount * 4) - ($incorrectAnswersCount * 2);
+    $_SESSION['score'] = $score;
 
     // Redirect to the score.php page
     header('Location: score.php');
@@ -83,7 +84,7 @@ $_SESSION['questions'] = $selectedQuestionsData;
             <div>
                 <?php echo $question['html']; ?>
                 <label for="answer_<?php echo $question['number']; ?>">Your Answer:</label>
-                <input type="text" name="userAnswers[<?php echo $question['number']; ?>]" id="answer_<?php echo $question['number']; ?>" required>
+                <input type="text" name="userAnswers[<?php echo $question['number']; ?>]" id="answer_<?php echo $question['number']; ?>">
             </div>
         <?php endforeach; ?>
 

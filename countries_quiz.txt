@@ -1,9 +1,9 @@
-Canada is south of the United States,0
-Russia has a larger land area than Pluto,1
-The capital of Australia is Sydney,0
-Egypt shares a border with Sudan,1
-Iceland is covered in ice,0
-Brazil is the largest country in South America,1
-Switzerland is located on the Iberian Peninsula,0
-India has the second largest population in the world,1
-Greenland is larger than Australia,0
+1|Canada is south of the United States|false
+2|Russia has a larger land area than Pluto|true
+3|The capital of Australia is Sydney|false
+4|Egypt shares a border with Sudan|true
+5|Iceland is covered in ice|false
+6|Brazil is the largest country in South America|true
+7|Switzerland is located on the Iberian Peninsula|false
+8|India has the second largest population in the world|true
+9|Greenland is larger than Australia|false
