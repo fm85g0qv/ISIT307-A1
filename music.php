@@ -4,41 +4,26 @@ session_start();
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve user answers from the form
-    $userAnswers = isset($_POST['userAnswers']) ? $_POST['userAnswers'] : [];
+    $userAnswers = $_POST['userAnswers'] ?? [];
 
-    // Set score to 0;
-    $score = 0;
-/*     foreach ($_SESSION['questions'] as $question) {
-        $correctAnswer = strtolower($question['name']);
-        $userAnswer = strtolower($userAnswers[$question['number']]);
-        if ($userAnswer === $correctAnswer) {
-            $score++;
-        } else {
-            $score--;
-        }
-    } */
-	
-	// Initialize counters
-    $correctAnswersCount = 0;
-    $incorrectAnswersCount = 0;
+    // Initialize counters
+    $correctAnswersCount = $incorrectAnswersCount = 0;
 
     // Check user answers against correct answers and update the counts
     foreach ($_SESSION['questions'] as $question) {
         $correctAnswer = strtolower($question['name']);
-        $userAnswer = strtolower($userAnswers[$question['number']]);
-        if ($userAnswer === $correctAnswer) {
-            $correctAnswersCount++;
-        } else {
-            $incorrectAnswersCount++;
-        }
+        $userAnswer = strtolower($userAnswers[$question['number']] ?? '');
+
+        $correctAnswersCount += ($userAnswer === $correctAnswer) ? 1 : 0;
+        $incorrectAnswersCount += ($userAnswer !== $correctAnswer) ? 1 : 0;
     }
 
     // Update the session counts
     $_SESSION['correctAnswersCount'] = $correctAnswersCount;
     $_SESSION['incorrectAnswersCount'] = $incorrectAnswersCount;
-	
-	// Update the session score
-	$score = ($correctAnswersCount * 4) - ($incorrectAnswersCount * 2);
+
+    // Update the session score
+    $score = ($correctAnswersCount * 4) - ($incorrectAnswersCount * 2);
     $_SESSION['score'] = $score;
 
     // Redirect to the score.php page
@@ -47,23 +32,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Read questions from the text file
+$fileContents = file_get_contents('music_quiz.txt') ?: '';
+$lines = explode("\n", $fileContents);
+
 $questions = [];
-$lines = file('music_quiz.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 foreach ($lines as $line) {
-    $data = explode('|', $line);
-    $questions[] = [
-        'number' => trim($data[0]),
-        'name' => trim($data[1]),
-        'html' => trim($data[2]),
-    ];
+    if (!empty($line)) {
+        $data = explode('|', $line);
+        $questions[] = [
+            'number' => trim($data[0]),
+            'name' => trim($data[1]),
+            'html' => trim($data[2]),
+        ];
+    }
 }
 
-// Randomly select 3 questions
-$selectedQuestions = array_rand($questions, 3);
-$selectedQuestionsData = [];
-foreach ($selectedQuestions as $index) {
-    $selectedQuestionsData[] = $questions[$index];
-}
+// Shuffle the questions
+shuffle($questions);
+
+// Select the first 3 questions
+$selectedQuestionsData = array_slice($questions, 0, 3);
 
 // Save selected questions in the session
 $_SESSION['questions'] = $selectedQuestionsData;

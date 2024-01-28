@@ -4,25 +4,17 @@ session_start();
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve user answers from the form
-    $userAnswers = isset($_POST['userAnswers']) ? $_POST['userAnswers'] : [];
+    $userAnswers = $_POST['userAnswers'] ?? [];
 
     // Initialize counters
-    $correctAnswersCount = 0;
-    $incorrectAnswersCount = 0;
+    $correctAnswersCount = $incorrectAnswersCount = 0;
 
     // Check user answers against correct answers and update the counts
-	foreach ($_SESSION['questions'] as $question) {
-		$correctAnswer = $question['boolean'];
-		$userAnswer = strtolower($userAnswers[$question['number']]);
-		
-		if ($userAnswer === $correctAnswer) {
-			$correctAnswersCount++;
-		} else {
-			$incorrectAnswersCount++;
-		}
-	}
-
-
+    foreach ($_SESSION['questions'] as $question) {
+        $userAnswer = strtolower($userAnswers[$question['number']] ?? '');
+        $correctAnswersCount += ($userAnswer === $question['boolean']);
+        $incorrectAnswersCount += ($userAnswer !== $question['boolean']);
+    }
 
     // Update the session counts
     $_SESSION['correctAnswersCount'] = $correctAnswersCount;
@@ -37,24 +29,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 
-// Read questions from the text file
+// Read questions from the text file and select 3 random questions
+$fileContents = file_get_contents('countries_quiz.txt');
+$lines = explode("\n", $fileContents);
+
 $questions = [];
-$lines = file('countries_quiz.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 foreach ($lines as $line) {
-    $data = explode('|', $line);
-    $questions[] = [
-        'number' => trim($data[0]),
-        'trivia' => trim($data[1]),
-        'boolean' => trim($data[2]),
-    ];
+    if (!empty($line)) {
+        $data = explode('|', $line);
+        $questions[] = [
+            'number' => trim($data[0]),
+            'trivia' => trim($data[1]),
+            'boolean' => trim($data[2]),
+        ];
+    }
 }
 
 // Randomly select 3 questions
-$selectedQuestions = array_rand($questions, 3);
-$selectedQuestionsData = [];
-foreach ($selectedQuestions as $index) {
-    $selectedQuestionsData[] = $questions[$index];
-}
+$selectedQuestionsData = array_intersect_key($questions, array_flip(array_rand(array_column($questions, 'number'), 3)));
 
 // Save selected questions in the session
 $_SESSION['questions'] = $selectedQuestionsData;
@@ -81,7 +73,7 @@ $_SESSION['questions'] = $selectedQuestionsData;
                     <input type="radio" name="userAnswers[<?php echo $question['number']; ?>]" value="false"> False
                 </label>
             </div>
-			<br>
+            <br>
         <?php endforeach; ?>
 
         <button type="submit">Submit</button>
