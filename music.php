@@ -70,7 +70,7 @@ $_SESSION['questions'] = $selectedQuestionsData;
 <body>
     <h1>Music Quiz</h1>
 
-    <form method="post" action="">
+    <form method="post" action="" autocomplete="off">
         <?php foreach ($selectedQuestionsData as $question): ?>
             <div>
                 <?php echo $question['html']; ?>
