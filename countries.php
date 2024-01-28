@@ -31,11 +31,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 
+/*
 // Read questions from the text file
-$fileContents = file_get_contents('countries_quiz.txt');
-$lines = explode("\n", $fileContents);
-
 $questions = [];
+$lines = file('music_quiz.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+foreach ($lines as $line) {
+    $data = explode('|', $line);
+    $questions[] = [
+        'number' => trim($data[0]),
+        'name' => trim($data[1]),
+        'html' => trim($data[2]),
+    ];
+}
+*/
+// Read questions from the text file
+$questions = [];
+/* $fileContents = file_get_contents('countries_quiz.txt');
+$lines = explode("\n", $fileContents); */
+$lines = file('countries_quiz.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 foreach ($lines as $line) {
     if (!empty($line)) {
         $data = explode('|', $line);
@@ -46,6 +59,7 @@ foreach ($lines as $line) {
         ];
     }
 }
+
 
 // Randomize questions and select the first 3
 shuffle($questions);
