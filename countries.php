@@ -1,5 +1,6 @@
 <?php
 session_start();
+include 'check_leaderboards.php';
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -16,20 +17,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $incorrectAnswersCount += ($userAnswer !== $question['boolean']);
     }
 
-    // Update the session counts
+    // Update the quiz score and counts
+    $_SESSION['score'] = $correctAnswersCount * 4 - $incorrectAnswersCount * 2;
     $_SESSION['correctAnswersCount'] = $correctAnswersCount;
     $_SESSION['incorrectAnswersCount'] = $incorrectAnswersCount;
+	$_SESSION['overallPoints'] += $_SESSION['score'];
+	
+	//Submit to leaderboards
+	submitCurrentScore();
 
-    // Update the session score
-    $score = ($correctAnswersCount * 4) - ($incorrectAnswersCount * 2);
-    $_SESSION['score'] = $score;
-
-    // Redirect to the score.php page
-    header('Location: score.php');
+    // Redirect to the result.php page
+    header('Location: result.php');
     exit();
 }
 
-// Read questions from the text file and select 3 random questions
+// Read questions from the text file
 $fileContents = file_get_contents('countries_quiz.txt');
 $lines = explode("\n", $fileContents);
 
@@ -45,8 +47,9 @@ foreach ($lines as $line) {
     }
 }
 
-// Randomly select 3 questions
-$selectedQuestionsData = array_intersect_key($questions, array_flip(array_rand(array_column($questions, 'number'), 3)));
+// Randomize questions and select the first 3
+shuffle($questions);
+$selectedQuestionsData = array_slice($questions, 0, 3);
 
 // Save selected questions in the session
 $_SESSION['questions'] = $selectedQuestionsData;

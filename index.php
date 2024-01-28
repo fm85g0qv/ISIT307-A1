@@ -16,6 +16,9 @@ if(isset($_GET['music'])) {
   exit();  
 }
 
+//start a session for overall points
+$_SESSION['overallPoints'] = 0;
+
 ?>
 
 <!DOCTYPE html>

@@ -1,0 +1,6 @@
+name1|24
+name2|8
+name3|16
+name4|5
+name5|19
+newname|58
