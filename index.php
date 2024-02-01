@@ -24,20 +24,24 @@ $_SESSION['overallPoints'] = 0;
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Funny Facts Quiz</title>  
+	<title>Funny Facts Quiz</title> 
+	<link rel="stylesheet" type="text/css" href="stylesheet.css">
 </head>
 
 <body>
-
+<div class="small-container">
+<label>
 <h1>Welcome to Funny Facts Quiz</h1>
 
 <form>
   <label for="name">Enter Your Name:</label>
-  <input type="text" id="name" name="name">
+  <input type="text" id="name" name="name" required>
   <p>Select a topic</p>
   <button type="submit" name="countries" value="true">Countries</button>
   <button type="submit" name="music" value="true">Music</button>
-</form>
 
+</form>
+</label>
+</div>
 </body>
 </html>

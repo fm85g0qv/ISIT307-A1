@@ -75,14 +75,17 @@ $_SESSION['questions'] = $selectedQuestionsData;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Countries Quiz</title>
+	<link rel="stylesheet" type="text/css" href="stylesheet.css">
 </head>
 <body>
+	<div class="small-container">
+	<label>
     <h1>Countries Quiz</h1>
 
     <form method="post" action="">
         <?php foreach ($selectedQuestionsData as $question): ?>
             <div>
-                <?php echo $question['trivia'] . "<br>"; ?>
+                <?php echo $question['trivia'] . "<br><br>"; ?>
                 <label>
                     <input type="radio" name="userAnswers[<?php echo $question['number']; ?>]" value="true"> True
                 </label>
@@ -95,5 +98,7 @@ $_SESSION['questions'] = $selectedQuestionsData;
 
         <button type="submit">Submit</button>
     </form>
+	</label>
+	<div>
 </body>
 </html>

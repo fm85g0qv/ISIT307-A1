@@ -4,3 +4,6 @@ name3|16
 name4|5
 name5|19
 newname|58
+jeric|24
+asdasd|6
+asdasdasdasdasd|-6

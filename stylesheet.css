@@ -1,0 +1,148 @@
+body {
+    background: #ffffff;
+}
+.small-container {
+    width: 600px;
+    margin: 50px auto;
+    font-size: 15px;
+    margin-bottom: 15px;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    border-radius: 8px;
+}
+/*container for questions*/
+.container {
+  width: 800px;
+  margin: 50px auto;
+  font-size: 15px;
+  margin-bottom: 15px;
+  background: #f8f8f8;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  padding: 30px;
+  border-radius: 8px;
+}
+h1 {
+    text-align: center;
+    margin: 0 0 15px;
+    color:#ff0000;
+    font-family:verdana;
+}
+h2 {
+    text-align: center;
+    margin: 0 0 15px;
+    font-family:verdana;
+}
+h3 {
+    text-align: center;
+    margin: 0 0 15px;
+    color:#008a27; 
+    font-family:verdana;
+}
+h4 {
+    text-align: center;
+    margin: 0 0 15px;
+    color:#9201b6; 
+    font-family:verdana;
+}
+/*heading for background*/
+.header {
+    text-align: center;
+    margin: 0 0 15px;
+    color:#000000; 
+    font-family:verdana;
+}
+label {
+    font-size:15px;
+    display: block;
+	  margin: 0px 0px 15px 0px;
+    font-family:verdana;
+}
+.smallbluebtn {
+    font-weight: bold;
+    background-color: #112ba1; 
+    color:white;
+    border-radius: 8px;
+    border: none;
+    padding: 5px 15px 8px 15px;
+    text-align: center;
+}
+.exit {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: bold;
+    background-color: indianred;
+    color:white;
+    border-radius: 8px;
+    border: none;
+    text-align: center;
+}
+.leadb {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: bold;
+    background-color: springgreen;
+    color:white;
+    border-radius: 10px;
+    border: none;
+    text-align: center;
+}
+.subjectbtn {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #112ba1; 
+    color:white;
+    border-radius: 8px;
+    border: none;
+    width: 75%;
+    padding: 14px 28px;
+    text-align: center;
+}
+button {
+    background-color: #112ba1; 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor:pointer;
+}
+.back{
+        display: block;
+        margin-left: auto;
+        margin-right: 5%;
+        font-weight: bold;
+        background-color: rgb(9, 155, 65);
+        color:white;
+        border-radius: 8px;
+        border: none;
+        padding: 5px 15px 8px 15px;
+        text-align: center;
+    
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #ffffff;
+    color: black;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}

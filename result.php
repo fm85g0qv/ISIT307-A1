@@ -2,38 +2,25 @@
 session_start();
 
 include 'check_leaderboards.php';
-/* // Initialize overallPoints if it doesn't exist
-if (!isset($_SESSION['overallPoints']) || !is_array($_SESSION['overallPoints'])) {
-	$_SESSION['overallPoints'] = array();
-}
-
-// Check if the user has an existing entry in overallPoints
-	if (!isset($_SESSION['overallPoints'][$_SESSION['name']])) {
-		$_SESSION['overallPoints'][$_SESSION['name']] = 0;
-	}
-
-// Increment overallPoints by the value of score
-$_SESSION['overallPoints'][$_SESSION['name']] += $_SESSION['score']; */
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>Results</title>
+	<link rel="stylesheet" type="text/css" href="stylesheet.css">
 </head>
 
 <body>
+	<div class="small-container">
+	<label>
 	<h1>Results</h1>
 
-    Hello <?=$_SESSION['name']?> <br>
-    Your score for this quiz is <?=$_SESSION['score']?> <br>
-    Correct Answers = <?=$_SESSION['correctAnswersCount']?> <br>
-    Incorrect Answers = <?=$_SESSION['incorrectAnswersCount']?> <br>
-    Your overall points for this attempt is = <?=$_SESSION['overallPoints']?>
-
-    <?php
-    /* session_destroy(); */
-    ?>
+    Hello <strong><?=$_SESSION['name']?></strong> <br>
+    Your score for this quiz is <strong><?=$_SESSION['score']?></strong> <br>
+    Correct Answers = <strong><?=$_SESSION['correctAnswersCount']?></strong> <br>
+    Incorrect Answers = <strong><?=$_SESSION['incorrectAnswersCount']?></strong> <br>
+    Your overall points for this attempt is = <strong><?=$_SESSION['overallPoints']?></strong>
 
     <p>Start a new quiz topic:</p>
 
@@ -49,6 +36,7 @@ $_SESSION['overallPoints'][$_SESSION['name']] += $_SESSION['score']; */
     <br>
 
     <button onclick="location.href='exit.php'">Exit</button>
-
+	</label>
+	</div>
 </body>
 </html>

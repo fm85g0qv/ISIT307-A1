@@ -16,15 +16,21 @@ if (isset($_GET['restart'])) {
 <html>
 <head>
 	<title>Exit</title>
+	<link rel="stylesheet" type="text/css" href="stylesheet.css">
 </head>
 <body>
+	<div class="small-container">
+	<label>
 	<h1>Thank you for playing</h1>
 	
-	Name = <?=$_SESSION['name']?> <br>
-	Overall Attempt = <?=$_SESSION['overallPoints']?>
+	Name = <strong><?=$_SESSION['name']?></strong> <br><br>
+	Overall Attempt = <strong><?=$_SESSION['overallPoints']?></strong>
 
     <form action="index.php" method="get">
+		<br>
         <button type="submit" name="restart">Restart</button>
     </form>
+	</label>
+	</div>
 </body>
 </html>

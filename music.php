@@ -66,8 +66,11 @@ $_SESSION['questions'] = $selectedQuestionsData;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music Quiz</title>
+	<link rel="stylesheet" type="text/css" href="stylesheet.css">
 </head>
 <body>
+	<div class="small-container">
+	<label>
     <h1>Music Quiz</h1>
 
     <form method="post" action="" autocomplete="off">
@@ -78,8 +81,10 @@ $_SESSION['questions'] = $selectedQuestionsData;
                 <input type="text" name="userAnswers[<?php echo $question['number']; ?>]" id="answer_<?php echo $question['number']; ?>">
             </div>
         <?php endforeach; ?>
-
+		<br>
         <button type="submit">Submit</button>
     </form>
+	</label>
+	</div>
 </body>
 </html>

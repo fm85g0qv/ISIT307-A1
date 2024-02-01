@@ -22,8 +22,11 @@ if (isset($_GET['sort'])) {
 <html>
 <head>
     <title>Leaderboards</title>
+	<link rel="stylesheet" type="text/css" href="stylesheet.css">
 </head>
 <body>
+	<div class="small-container">
+	<label>
     <h1>Leaderboards</h1>
 
     <!-- Sort buttons -->
@@ -61,12 +64,16 @@ if (isset($_GET['sort'])) {
     echo "</table>";
     ?>
 	
+	<br>
     <form method="get" action="exit.php">
         <button type="submit">Go to Exit</button>
     </form>
+	<br>
 
     <form method="get" action="result.php">
         <button type="submit">Go to Results</button>
     </form>
+	</label>
+	</div>
 </body>
 </html>

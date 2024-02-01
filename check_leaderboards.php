@@ -28,36 +28,6 @@ function checkIfExists($name) {
     return false; // Name not found in leaderboard
 }
 
-/* function getScore($name) {
-    // Convert the name to lowercase for case-insensitive comparison
-    $name = strtolower($name);
-
-    // Read the contents of the leaderboards.txt file
-    $leaderboardData = file_get_contents('leaderboards.txt');
-
-    // Explode the data into an array of lines
-    $leaderboardLines = explode("\n", $leaderboardData);
-
-    // Iterate through each line
-    foreach ($leaderboardLines as $line) {
-        // Skip empty lines
-        if (!empty($line)) {
-            // Explode the line into name and score
-            list($leaderName, $score) = explode('|', $line);
-
-            // Convert the leader name to lowercase for case-insensitive comparison
-            $leaderName = strtolower($leaderName);
-
-            // Check if the provided name matches any name in the leaderboard
-            if ($name === $leaderName) {
-                return (int)$score; // Convert score to integer and return
-            }
-        }
-    }
-
-    return false; // Name not found in leaderboard
-} */
-
 //Submit attempt to leaderboards
 function submitCurrentScore() {
     $name = $_SESSION['name'];
@@ -72,7 +42,7 @@ function submitCurrentScore() {
     // Explode the data into an array of lines
     $leaderboardLines = explode("\n", $leaderboardData);
 
-    // Flag to track if the name was found in the leaderboard
+    // Boolean to track if the name was found in the leaderboard
     $nameFound = false;
 
     // Iterate through each line
